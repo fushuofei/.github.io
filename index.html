@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔓嘿💻</title>
+    <style>
+        body {
+            display: flex; /* 使用 Flexbox 布局 */
+            font-family: Arial, sans-serif; /* 设置字体 */
+            background-color: #f7f7f7; /* 背景颜色 */
+            margin: 0; 
+            padding: 20px; /* 内边距 */
+            color: #333; /* 字体颜色 */
+        }
+        #sidebar {
+            width: 300px; /* 侧边栏宽度 */
+            background-color: #ffffff; /* 侧边栏背景颜色 */
+            padding: 15px; /* 内边距 */
+            border-radius: 8px; /* 圆角 */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* 阴影效果 */
+            margin-right: 20px; /* 右边距 */
+        }
+        #sidebar h2 {
+            font-size: 2em; /* 标题字体大小 */
+            color: black; /* 目录标题颜色 */
+            cursor: pointer; /* 鼠标指针样式 */
+            margin-bottom: 15px; /* 底部间距 */
+        }
+        #sidebar a {
+            font-size: 1.5em; /* 链接字体大小 */
+            display: block; /* 使链接块级显示 */
+            text-decoration: none; /* 去除下划线 */
+            color: black; /* 链接颜色 */
+            margin: 10px 0; /* 上下间距 */
+            padding: 10px; /* 内边距 */
+            border-radius: 4px; /* 圆角 */
+            transition: background-color 0.3s; /* 背景色变化时的速度 */
+        }
+        #submenu1 a, #submenu2 a, #submenu3 a, #submenu4 a {
+            font-size: 1.2em; /* 链接字体大小 */
+            display: block; /* 使链接块级显示 */
+            text-decoration: none; /* 去除下划线 */
+            color: black; /* 链接颜色 */
+            margin: 10px 0; /* 上下间距 */
+            padding: 10px; /* 内边距 */
+            border-radius: 4px; /* 圆角 */
+            transition: background-color 0.3s; /* 背景色变化时的速度 */
+        }
+        #sidebar a:hover, #sidebar a.active {
+            background-color: #c3e6cb; /* 悬停或活动时背景颜色 */
+            font-weight: bold; /* 加粗 */
+        }
+        #content {
+            padding: 20px; /* 内容区内边距 */
+            flex-grow: 1; /* 允许内容区扩展 */
+            background-color: #ffffff; /* 内容区背景颜色 */
+            border-radius: 8px; /* 圆角 */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* 阴影效果 */
+        }
+        h1 {
+            margin: 0; /* 去除边距 */
+            font-size: 24px; /* 字体大小 */
+        }
+        h3 {
+            color: #777; /* 字体颜色 */
+            margin: 20px 0 10px; /* 上下间距 */
+        }
+        .link {
+            color: #FFA500; /* 超链接颜色 */
+            text-decoration: none; /* 去除下划线 */
+        }
+        .link:hover {
+            font-weight: bold; /* 悬停时加粗 */
+            color: #999999; /* 悬停时颜色 */
+        }
+        .link-red {
+            color: red; /* 超链接颜色 */
+            text-decoration: none; /* 去除下划线 */
+        }
+        .link-red:hover {
+            font-weight: bold; /* 悬停时加粗 */
+            color: #999999; /* 悬停时颜色 */
+        }
+        p {
+            margin-left: 20px; /* 左边距 */
+        }
+        .icon {
+            margin-right: 10px; /* 右边距 */
+        }
+        .submenu {
+            display: none; /* 默认隐藏子菜单 */
+            margin-left: 20px; /* 左边距 */
+        }
+        .submenu a {
+            padding: 5px; /* 内边距 */
+        }
+        #content span {
+            font-weight: bold;
+            color: #49D8A0;
+        }
+        .my-mail {
+            color: rgb(173, 173, 173);
+            font-weight: bold;
+            text-align: center;
+            margin-left: 20px; /* 左边距 */
+        }
+    </style>
+</head>
+<body>
+
+<div id="sidebar">
+    <h2 onclick="resetContent(); toggleSubmenu('sub', this)">开始</h2>
+    <a href="javascript:void(0);" onclick="toggleSubmenu('submenu1', this); changeContent(content1, this)">
+        <span class="icon">🔗</span>网站
+    </a>
+    <div id="submenu1" class="submenu">
+        <a href="javascript:void(0);" onclick="changeContent(content1_1, this)">🌐各类网站</a>
+        <a href="javascript:void(0);" onclick="changeContent(content1_2, this)">☁️网盘/云网站</a>
+        <a href="javascript:void(0);" onclick="changeContent(content1_3, this)">🎄资源集网站</a>
+        <a href="javascript:void(0);" onclick="changeContent(content1_4, this)">🎧文本/媒体处理网站</a>
+        <a href="javascript:void(0);" onclick="changeContent(content1_5, this)">🤖AI类网站</a>
+    </div>
+    <a href="javascript:void(0);" onclick="toggleSubmenu('submenu2', this); changeContent(content2, this)">
+        <span class="icon">💻</span>各类软件
+    </a>
+    <div id="submenu2" class="submenu">
+        <a href="javascript:void(0);" onclick="changeContent(content2_1, this)">🚀浏览器插件</a>
+        <a href="javascript:void(0);" onclick="changeContent(content2_2, this)">🖥️Windows</a>
+        <a href="javascript:void(0);" onclick="changeContent(content2_3, this)">📱Android</a>
+        <a href="javascript:void(0);" onclick="changeContent(content2_4, this)">📺TV</a>
+    </div>
+    <a href="javascript:void(0);" onclick="toggleSubmenu('submenu3', this); changeContent(content3, this)">
+        <span class="icon">📰</span>杂
+    </a>
+    <div id="submenu3" class="submenu">
+        <a href="javascript:void(0);" onclick="changeContent(content3_1, this)">🎶洛雪音乐源</a>
+        <a href="javascript:void(0);" onclick="changeContent(content3_2, this)">👨‍💻Mbox视频源</a>
+        <a href="javascript:void(0);" onclick="changeContent(content3_3, this)">🔌直播接口</a>
+        <a href="javascript:void(0);" onclick="changeContent(content3_4, this)">👨‍🎤抖音博主</a>
+        <a href="javascript:void(0);" onclick="changeContent(content3_5, this)">📶主副路由设置</a>
+        <a href="javascript:void(0);" onclick="changeContent(content3_6, this)">💡GitHub网站打开的慢</a>
+        <a href="javascript:void(0);" onclick="changeContent(content3_7, this)">🖥️Windows 10取消密码登录</a>
+        <a href="javascript:void(0);" onclick="changeContent(content3_8, this)">🆙Netlify使用说明</a>
+    </div>
+    <a href="javascript:void(0);" onclick="toggleSubmenu('submenu4', this); changeContent(content4, this)">📜&nbsp;&nbsp;Emoji网站</a>
+    <div id="submenu4" class="submenu"></div>
+</div>
+
+<div id="content">
+    <h1>一些学习的网站</h1>
+    <p>
+        <h3><a class="link" href="https://www.netlify.com/" target="_blank">Netlify</a> - 免费提供静态网站托管服务</h3>
+        <h3><a class="link-red" href="https://www.lzpanx.com/" target="_blank">懒盘搜索</a> - 提供夸克网盘|阿里云盘|迅雷网盘资源搜索服务</h3> 
+        <h3><a class="link" href="https://www.51zxw.net/" target="_blank">我要自学网</a> - 视频教程|免费教程|自学电脑|3D教程|平面教程|影视动画教程|办公教程|机械设计教程|网站设计教程-我要自学网</h3> 
+        <h3><a class="link" href="https://www.runoob.com/" target="_blank">HTML | 菜鸟教程</a></h3>
+        <h3><a class="link" href="https://www.freecodecamp.org/chinese/" target="_blank">freeCodeCamp</a> - 免费学习编程 - Python、JavaScript、Java、Git 等</h3>
+        <h3><a class="link" href="https://jsrun.net/" target="_blank">小闪电</a> - JSRUN可以在线编辑并运行代码的网站</h3>
+        <h3><a class="link" href="https://www.cnblogs.com/cinemaparadiso/p/9036722.html" target="_blank">博客园 - 南国之恋 - 学习网站</a></h3>
+        <h3><a class="link" href="https://yixi.tv/#/home" target="_blank">一席</a> - 演讲</h3>
+        <h3><a class="link" href="https://blog.csdn.net/weixin_36184718/article/details/142932978" target="_blank">构建专业CHM帮助文档的全攻略</a></h3>
+    </p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p class="my-mail">13716111921@163.com</p>
+</div>
+
+<script>
+    // 内容映射对象，存储各类内容的 HTML 字符串
+    const content1 = `
+        <h2>🔗 网站</h2>
+        <h3>&nbsp; &nbsp; &nbsp; &nbsp; 🌐 各类网站</h3>         
+        <h3>&nbsp; &nbsp; &nbsp; &nbsp; ☁️ 网盘/云网站</h3>        
+        <h3>&nbsp; &nbsp; &nbsp; &nbsp; 🎄 资源集网站</h3>
+        <h3>&nbsp; &nbsp; &nbsp; &nbsp; 🎧 文本/媒体处理网站</h3>
+        <h3>&nbsp; &nbsp; &nbsp; &nbsp; 🤖 AI类网站</h3>
+    `;
+
+    const content1_1 = `
+        <p>
+            <h3 style="font-weight: bold;">🌐 各类网站</h3>
+        </p>
+            <p><a class="link" href="https://www.google.cn/chrome/" target="_blank">Chrome下载地址</a></p>
+            <p><a class="link" href="https://chromewebstore.google.com/" target="_blank">Chrome应用商店</a>（需翻墙）</p>
+            <p><a class="link" href="https://www.crxsoso.com/" target="_blank">Crx搜搜 - 一个牛X的扩展和应用商店</a>
+                &nbsp; &nbsp; &nbsp; &nbsp; <a class="link" href="https://www.chajianxw.com/" target="_blank">插件小屋 - Chrome插件</a>
+                &nbsp; &nbsp; &nbsp; &nbsp; <a class="link" href="https://chrome.zzzmh.cn/index" target="_blank">极简插件</a>
+            </p>
+            <p>
+                <a class="link" href="https://msdn.itellyou.cn/" target="_blank">MSDN,我告诉你</a>（旧地址）&nbsp; &nbsp; &nbsp; &nbsp; 
+                <a class="link" href="https://next.itellyou.cn/" target="_blank">ITELLYOU,MSDN,ITELLYOU,我告诉你</a>（新地址）
+            </p>
+            <p><a class="link" href="https://xb1.com/" target="_blank">电影电视剧简介</a></p>
+            <p><span>在线图表制作工具：</span>
+                <a class="link" href="https://chartcube.alipay.com/" target="_blank">ChartCube</a>
+            </p>
+            <p><span>免费高效的错别字检查工具：</span>
+                <a class="link" href="https://www.ijiaodui.com/" target="_blank">爱校对官网</a>
+            </p>
+            <p><a class="link" href="https://www.szlib.org.cn/" target="_blank">深圳图书馆</a></p>
+            <p><a class="link" href="https://bz.zzzmh.cn/index" target="_blank">极简壁纸_海量电脑桌面壁纸美图_4K超高清_最潮壁纸网站</a></p>
+            <p><a class="link" href="https://www.100font.com/" target="_blank">免费商用字体大全 - 免费字体下载网站</a></p>
+            <p><a class="link" href="https://www.kumh.cc/" target="_blank">飞飞漫画网-一个免费看漫画网站</a></p>
+            <p><span style="font-weight: bold; color: red;">电影/电视剧聚合资源网站：</span>
+                <a class="link" href="https://wandou1.net/" target="_blank">豌豆PRO-全网影视聚合搜索</a>
+                &nbsp; &nbsp; &nbsp; &nbsp; <a class="link" href="http://dsxys.pro/" target="_blank">大师兄影视</a>
+            </p>
+    `;
+
+    const content1_2 = `
+        <p>
+            <h3 style="font-weight: bold;">☁️ 网盘/云网站</h3>
+        </p>
+            <p><a class="link" href="https://lanzouw.com/" target="_blank">蓝奏·云存储</a>————非常NB的云，下载无需登录不限速，容量无上限，上传单文件最大100M</p>            
+            <p><a class="link" href="https://www.123pan.com/" target="_blank">123云盘</a>————2T空间，大文件急速上传，下载被分享的文件<100M无需登录,>100M需登录,大小文件均不需app下载且不限速</p>
+            <p><a class="link" href="https://e.dlife.cn/index.do" target="_blank">天翼云盘</a>————10T空间，下载被分享的文件需登录</p>
+            <p><a class="link" href="https://cowtransfer.com/" target="_blank">奶牛快传</a>————非必要不用</p>
+            <p><a class="link" href="https://www.ctfile.com/" target="_blank">城通网盘</a>————非必要不用</p>
+            <p><a class="link" href="https://erlyun.com/" target="_blank">云书签 - 简洁高效的书签管理工具</a>（微信扫码登录）</p>
+            <p><span>网盘直链获取工具：</span><br>
+                &nbsp; &nbsp; &nbsp; &nbsp; <a class="link" href="https://lz.qaiu.top/" target="_blank">Netdisk fast download</a>
+                &nbsp; &nbsp; &nbsp; &nbsp; <a class="link" href="https://link.gimhoy.com/" target="_blank">网盘永久外链地址生成工具 OneDrive,Google Drive, Dropbox直链在线生成 | Gimhoy Studio</a>
+            </p>
+        <h3 style="font-weight: bold; color: #0094F2; ">音床</h3>
+            <p><a class="link" href="https://music.gimhoy.com/" target="_blank">Gimhoy音乐盘</a>————无需登录，免费获取直链</p>
+            <p><span style="font-weight: bold; color: red;">OneDrive</span>可用
+                <a class="link" href="https://link.gimhoy.com/" target="_blank">网盘直链获取工具</a>获取直链————5G空间
+            </p>
+        <h3 style="font-weight: bold; color: #0094F2; ">图床</h3>
+            <p><span>图片形式的Icon：</span>
+                <a class="link" href="https://www.iconfinder.com/" target="_blank">Iconfinder</a>
+            </p>
+            <p><span>svg形式的Icon：</span>
+                <a class="link" href="https://icon-icons.com/zh/" target="_blank">Icon-Icons logo - 免费图标SVG，PNG，ICO或ICNS</a>
+            </p>
+            <p><span>logo设计：</span>
+                <a class="link" href="https://www.shopify.com/tools/logo-maker" target="_blank">FREE Logo Maker - Create Your Own Logo in Minutes - Shopify</a>
+            </p>
+            <p><span style="font-weight: bold; color: red;">OneDrive</span>可用
+                <a class="link" href="https://link.gimhoy.com/" target="_blank">网盘直链获取工具</a>获取直链————5G空间
+            </p>
+            <p><a class="link" href="https://moetu.org/" target="_blank">MoeTu</a>————需登录，支持搜索，动图，非常全面的一个拥有全球 CDN 支持 HTTPS 的免费的图床</p>
+            <p><a class="link" href="https://www.superbed.cn/" target="_blank">聚合图床</a>————需登录，没有流量限制</p>
+            <p><a class="link" href="https://imgse.com/" target="_blank">路过图床</a>————需登录，单张最大10M，支持批量上传，貌似收费</p>            
+            <p><a class="link" href="https://iui.su/pic.html" target="_blank">图床推荐1</a>
+                &nbsp; &nbsp; &nbsp; &nbsp; <a class="link" href="https://blog.csdn.net/hbqjzx/article/details/138722630" target="_blank">图床推荐2</a>
+            </p>
+    `;
+    
+    const content1_3 = `
+        <p>
+            <h3 style="font-weight: bold;">🎄 资源集网站</h3>
+        </p>
+            <p><a class="link" href="https://hali.life/" target="_blank">程序员哈利 – hali.life</a></p>
+            <p><a class="link" href="https://www.yuque.com/quruanpu/dimqr1/qovkrsgfx0casrwq" target="_blank">📙全网源仓库📙</a></p>
+            <p><a class="link" href="https://www.yuque.com/jintianyeslema/xqdkue/gt3hpn5tooyvdngm?singleDoc=" target="_blank">月亮分享驿站（更多资源看群公告）</a></p>
+            <p><a class="link" href="https://www.hybase.com/" target="_blank">黑域基地 - 良心软件的栖息之地！</a></p>
+            <p><a class="link" href="https://www.zhanid.com/" target="_blank">站长工具网 - 实用的在线工具、网址大全及软件下载站</a></p>
+            <p><a class="link" href="https://tool.liumingye.cn/" target="_blank">刘明野的工具箱 | 刘明野的工具箱提供好用、易用的工具，还在不断添加中，欢迎访问！</a></p>
+            <p><a class="link" href="https://i6tkn5h5k5.feishu.cn/docx/M5W9dsydZot8P0xhbw8ceA8XnQa" target="_blank">互联网工具箱 - 飞书云文档</a></p>
+            <p><a class="link" href="https://6yso.com/" target="_blank">六音软件地址发布页</a></p>
+            <p><a class="link" href="https://www.it8808.com/" target="_blank">科技乐小天 - 免费软件资源_数码评测_系统优化_电脑装机</a></p>
+            <p><a class="link" href="https://yinghezhinan.com/" target="_blank">硬核指南</a> - 够高清才是真硬核！</p>
+            <p><a class="link" href="https://www.fenxm.com/" target="_blank">分享迷</a> - 优质精品TV软件、互联网资源分享</p>
+            <p><a class="link" href="https://yomige.com/" target="_blank">优米格</a> - 分享有营养的</p>
+            <p><a class="link" href="https://lxmusic.toside.cn/" target="_blank">LX Music - 一个免费&开源的音乐查找工具 | LX Music</a></p>
+            <p><span>本地音乐播放器:</span>
+                <a class="link" href="https://www.foobar2000.org/" target="_blank">Foobar2000</a>————不支持中文，汉化版在
+                <a class="link" href="https://www.baidu.com/s?wd=Foobar2000%E6%B1%89%E5%8C%96%E7%89%88" target="_blank">百度搜</a>
+            </p>
+            <p><a class="link" href="https://www.freedidi.com/13533.html" target="_blank">5款免费VPN推荐！不限流量</a></p>
+            <p><a class="link" href="https://astarvpn.com/index.html" target="_blank">Astar VPN</a></p>
+            <p><a class="link" href="https://protonvpn.com/" target="_blank">Proton VPN</a>（需翻墙）</p>
+            <p><span>局域网快传工具:</span>
+                <a class="link" href="https://flix.center/" target="_blank">Flix 快传</a>
+            </p>
+            <p><span>开源远程控制软件:</span>
+                <a class="link" href="https://github.com/rustdesk/rustdesk" target="_blank">Rustdesk</a> - GitHub网址
+            </p>
+            <p><span>TrackersList:</span>
+                <a class="link" href="https://trackerslist.com/#/zh" target="_blank">XIU2/TrackersListCollection</a>
+                &nbsp; &nbsp; &nbsp; &nbsp; <a class="link" href="https://newtrackon.com/" target="_blank">newtrackon, Tracking the Trackers</a>
+                &nbsp; &nbsp; &nbsp; &nbsp; <a class="link" href="https://github.com/ngosang/trackerslist" target="_blank">TrackersList - GitHub</a>
+            </p>
+            <p><span>将Tracker添加到Torrent中:</span>
+                <a class="link" href="https://madeby.lynx.pink/magnets/" target="_blank">Magnets - Online Magnet Links Editor</a>
+            </p>
+            <p><span>机械电气类资源集:</span>
+                <a class="link" href="https://mp.weixin.qq.com/s/OxyPgYtOo0I1w_9YTHE1Dg" target="_blank">开拔网资源</a>
+            </p>
+            <p><span>车机系统升级固件:</span>
+                <a class="link" href="https://vlink.cc/cheji666" target="_blank">车机重生站 | VLink</a>
+                &nbsp; &nbsp; &nbsp; &nbsp; <a class="link" href="https://pan.xunlei.com/s/VOCGftqyq9n3Yh7C3YoRCuwpA1?pwd=86ti&from=BHO%2Fpaste%2Fkouling" target="_blank">阳宝资源库</a>
+            </p>
+            <p><span>Html模板:</span>
+                <a class="link" href="https://codepen.io/" target="_blank">CodePen: Online Code Editor and Front End Web Developer Community</a>                
+            </p>
+    `;
+
+    const content1_4 = `
+        <p>
+            <h3 style="font-weight: bold;">🎧 文本/媒体处理网站</h3>
+        </p>
+            <p><a class="link" href="https://www.aifuse.cn/" target="_blank">易我人声分离 - 人声分离免费软件,人声分离在线网站,伴奏提取大师</a></p> 
+            <p><span>在线音视频及图片处理工具：</span>
+                <a class="link" href="https://www.apowersoft.cn/" target="_blank">Apowersoft</a>
+                &nbsp; &nbsp; &nbsp; &nbsp; <a class="link" href="https://www.aconvert.com/cn/" target="_blank">AC-NVERT</a>
+                &nbsp; &nbsp; &nbsp; &nbsp; <a class="link" href="https://convertio.co/zh/" target="_blank">Convertio — 文件转换器</a>
+                &nbsp; &nbsp; &nbsp; &nbsp; <a class="link" href="https://123apps.com/cn/" target="_blank">Web Apps by 123apps</a>（不太稳定，多尝试）
+            <p><span>在线gif处理工具：</span>
+                <a class="link" href="https://www.soogif.com/" target="_blank">SOOGIF</a>
+            </p>
+            <p>
+                <a class="link" href="https://fish.audio/zh-CN/" target="_blank">Fish Audio</a>（根据音频在线构建声音模型，需翻墙）&nbsp; &nbsp; &nbsp; &nbsp; 
+                <a class="link" href="https://github.com/fishaudio/fish-speech" target="_blank">Fish Audio</a>的GitHub项目
+            </p>  
+            <p><a class="link" href="https://www.alltoall.net/" target="_blank">PDF转Word | 免费在线PDF转Word |  PDF转Word转换器 | PDF转化速度快 | 首页</a></p>
+            <p><a class="link" href="https://www.ilovepdf.com/zh-cn" target="_blank">iLovePDF | 为PDF爱好者提供的PDF文件在线处理工具</a></p> 
+    `;
+
+    const content1_5 = `
+        <p>
+            <h3 style="font-weight: bold;">🤖 AI类网站</h3>
+        </p>
+            <p><span>强大的DeepSeek：</span>
+                <a class="link" href="https://www.deepseek.com/" target="_blank">DeepSeek官网</a>
+                &nbsp; &nbsp; &nbsp; &nbsp; <a class="link" href="https://platform.deepseek.com/" target="_blank">API - DeepSeek</a>
+            </p>
+            <p><span>问小白DeepSeek：</span>
+                <a class="link" href="https://www.wenxiaobai.com/chat/tourist" target="_blank">问小白</a> - DeepSeek R1 推理图片生成独家首发
+            </p>
+            <p><span>基于minimax-01的AI：</span>
+                <a class="link" href="https://hailuoai.com/" target="_blank">海螺AI—MiniMax</a>
+            </p>
+            <p><span>阿里出品AI：</span>
+                <a class="link" href="https://chat.qwenlm.ai/" target="_blank">Qwen</a>
+            </p>   
+            <p><span>基于Grok的AI搜索引擎：</span>
+                <a class="link" href="https://scira.app/" target="_blank">Scira</a>（对中文不大友好）
+            </p>
+            <p><a class="link" href="https://www.qiyuai.net/" target="_blank">奇域 - 中国风 ai 创作</a></p>
+            <p><a class="link" href="https://jiuge.thunlp.org/" target="_blank">九歌——人工智能诗歌写作系统</a></p>
+            <p><a class="link" href="https://www.shenyandayi.com/" target="_blank">深言达意 – 找词找句</a></p>
+            <p><a class="link" href="https://picwish.cn/" target="_blank">佐糖 - 在线AI图片处理工具_在线抠图_证件照换底色_去水印_照片修复</a></p>
+            <p><span>老照片修复，图片、视频去马赛克：</span>
+                <a class="link" href="https://codeformer.net/" target="_blank">CodeFormer ® - 中文网官网-专业AI图片修复软件工具包</a>（用前一定看完站内教程）
+            </p>                     
+        <h3 style="font-weight: bold; color: #0094F2;">AI集</h3>    
+            <p><a class="link" href="https://www.waytoagi.com/zh" target="_blank">WaytoAGI-通往AGI之路，最好的 AI 知识库和工具站</a></p>
+            <p><a class="link" href="https://aishenqi.net/" target="_blank">AI神器大全 | AI工具集合导航站</a></p>
+            <p><a class="link" href="https://www.kdocs.cn/l/cbB4gfbXvy9t" target="_blank">蒋先森的AI工具库</a></p>
+    `;
+
+    const content2 = `
+        <h2>💻 各类软件</h2>
+            <h3>&nbsp; &nbsp; &nbsp; &nbsp; 🚀 浏览器插件</h3>	            
+	        <h3>&nbsp; &nbsp; &nbsp; &nbsp; 🖥️ Windows</h3>	            
+	        <h3>&nbsp; &nbsp; &nbsp; &nbsp; 📱 Android</h3>	            
+	        <h3>&nbsp; &nbsp; &nbsp; &nbsp; 📺 TV</h3>	            
+    `;
+
+    const content2_1 = `
+        <h3>🚀 浏览器插件</h3>
+	        <p>Adblock Plus - 免费的广告拦截器</p>
+	        <p>Tampermonkey</p>
+	        <p>iTab新标签页</p>
+            <p>NeatDownloadManager Extension</p>
+            <p>Free Download Manager</p>
+            <p>chatgpt免费版 gpt-4（国内直连）</p>
+            <p>Astar VPN</p>
+            <p>SingleFile————是一个扩展程序，可帮助您作为单个HTML文件保存完整的页面（带有CS，图像，字体，帧等）</p>
+    `;
+
+    const content2_2 = `
+        <h3>🖥️ Windows</h3>
+        <h3 style="font-weight: bold; color: #0094F2;">工具</h3>
+            <p><a class="link" href="https://lz.qaiu.top/parser?url=https://wwnd.lanzouw.com/irsAw2hisw1e&pwd=i7se" target="_blank">WIN激活1</a>
+                &nbsp; &nbsp; &nbsp; &nbsp; <a class="link" href="http://www.yishimei.cn/network/319.html" target="_blank">WIN激活2</a>可免费激活office（内涵众多常用工具、软件资源链接，收费）
+            </p>
+	        <p><a class="link" href="https://www.google.cn/chrome/" target="_blank">Chrome</a></p>
+            <p><span>解压缩：</span>
+                <a class="link" href="https://www.rarlab.com/download.htm" target="_blank">RAR</a>官网下载
+                &nbsp; &nbsp; &nbsp; &nbsp; <a class="link" href="https://www.7-zip.org/" target="_blank">7z</a>（官网）
+                &nbsp; &nbsp; &nbsp; &nbsp; <a class="link" href="https://sparanoid.com/lab/7z/" target="_blank">7z</a>（中文网）
+            </p>
+            <p><span>文件查找：</span><a class="link" href="https://www.voidtools.com/zh-cn/" target="_blank">Everything</a></p>            
+            <p><span>截屏录屏软件：</span>
+                <a class="link" href="https://wwnd.lanzouw.com/iYZjT2klgt6f" target="_blank">FastStoneCapture</a>（小巧便捷）
+                &nbsp; &nbsp; &nbsp; &nbsp; <a class="link" href="https://obsproject.com/" target="_blank">Open Broadcaster Software | OBS</a>（比较专业）
+            </p>
+	        <p><span>PDF处理工具：</span>
+                <a class="link" href="https://www.pdfgear.com/zh/" target="_blank">PDFgear</a>
+                &nbsp; &nbsp; &nbsp; &nbsp; <a class="link" href="https://www.baidu.com/s?ie=UTF-8&wd=Adobe%20Acrobat%20DC" target="_blank">Adobe Acrobat DC</a>（百度搜索即可）
+            </p> 
+            <p><a class="link" href="http://www.pcfreetime.com/formatfactory/CN/index.html" target="_blank">FormatFactory - 格式工厂</a></p> 
+            <p><a class="link" href="https://www.todesk.com/" target="_blank">ToDesk - 远程桌面软件</a></p>
+            <p><span>小巧隐蔽的电子书阅读器，摸鱼专用：</span><a class="link" href="https://github.com/binbyu/Reader" target="_blank">Reader</a></p>
+            <p><span>色彩识别工具：</span><a class="link" href="https://wwnd.lanzouw.com/i2byT2kpyupc" target="_blank">TakeColor</a></p>
+        <h3 style="font-weight: bold; color: #0094F2;">媒体</h3>
+            <p><span>音频播放器：</span>
+                <a class="link" href="https://lxmusic.toside.cn/" target="_blank">LX music</a> - 洛雪音乐,比较繁琐，搜索准确
+                &nbsp; &nbsp; &nbsp; &nbsp; <a class="link" href="https://github.com/imsyy/SPlayer/releases" target="_blank">SPlayer</a> - SPlayer，比较简单，搜索一般
+                &nbsp; &nbsp; &nbsp; &nbsp; <a class="link" href="https://listen1.github.io/listen1/" target="_blank">Listen 1</a> - 除ios外，几乎支持所有平台，包括浏览器插件版
+            </p>
+            <p><span>视频播放器：</span>
+                <a class="link" href="https://potplayer.tv/?lang=zh_CN" target="_blank">PotPlayer</a>
+            </p>
+            <p><span>聚合软件，音乐，视频，壁纸，小说等：</span>
+                <a class="link" href="https://wwtn.lanzout.com/id5K42gxx9ih" target="_blank">太极</a>
+                &nbsp; &nbsp; &nbsp; &nbsp; <a class="link" href="https://pan.quark.cn/s/0718c0f81c82#/list/share" target="_blank">太极备用地址</a>
+            </p>
+        <h3 style="font-weight: bold; color: #0094F2; ">下载器</h3>
+            <span style="font-weight: bold; color: red;">推荐：NDM + 迅雷vip破解版 + ODE</span>
+            <p><span>ODE：一个不错的百度网盘下载工具：</span><br>
+                <a class="link" href="https://wwrc.lanzoue.com/iFtXr2fbonja" target="_blank">ODE v1.1.1 - 蓝奏云资源</a>
+                &nbsp; &nbsp; &nbsp; &nbsp; <a class="link" href="https://www.uy5.net/ode/" target="_blank">ODE v1.1.0 官方版 (自窝挖坑多功能生态应用) | 克隆窝</a>
+            </p>
+            <p><span>迅雷vip破解版：</span><br>
+                <a class="link" href="https://www.ddooo.com/softdown/205754.htm" target="_blank">迅雷vip破解版永久会员2024版下载-迅雷vip破解永久会员版下载 v11.2.2.1716绿色免安装版 - 多多软件站</a>
+            </p>
+            <p><span>很全面的下载器，网页捕获、Torrent：</span><br>
+                <a class="link" href="https://antdownloadmanager.com/" target="_blank">Ant Download Manager</a>
+            </p>
+            <p><span>日常下载、网页抓取等用起来非常好，小巧轻便：</span><br>
+                <a class="link" href="http://www.neatdownloadmanager.com/index.php/en/" target="_blank">Neat Download Manager </a>
+                &nbsp; &nbsp; &nbsp; &nbsp; 
+                <a class="link" href="https://zhuanlan.zhihu.com/p/504598024" target="_blank">NDM汉化包</a>
+                （如果NDM汉化包跟不上版本可在百度搜，使用方法就是替换掉“NeatDM.exe”这个文件）
+            </p>
+            <p><span>迅雷的强大不用多说，但有些无权限下载时可以试试FDM</span><br>
+                <a class="link" href="https://www.freedownloadmanager.org/zh/" target="_blank">Free Download Manager </a>(FDM可下载Torrent，<span style="font-weight: bold; color: red;">可添加tracker</span>)
+                &nbsp; &nbsp; &nbsp; &nbsp; <span>FDM的拓展：</span><a class="link" href="https://free-addons.org/" target="_blank">Elephant add-on for FDM</a>（目前还没发现其作用）
+            </p>
+            <p><a class="link" href="https://www.qbittorrent.org/download" target="_blank">qBittorrent</a><span>官网</span>（需翻墙）
+                &nbsp; &nbsp; &nbsp; &nbsp; <a class="link" href="https://www.fosshub.com/qBittorrent.html" target="_blank">qBittorrent</a><span>官网下载地址</span>
+                &nbsp; &nbsp; &nbsp; &nbsp; <a class="link" href="https://github.com/c0re100/qBittorrent-Enhanced-Edition/releases" target="_blank">qBittorrent</a><span>增强版</span>
+            </p>
+    `;
+    
+    const content2_3 = `
+        <h3>📱 Android</h3>
+	        <p><a class="link" href="https://lxmusic.toside.cn/" target="_blank">LX music</a>（洛雪音乐）</p>
+            <p><span>看剧app：</span>
+                <a class="link" href="http://dsxys.pro/" target="_blank">大师兄影视</a>
+            </p>
+            <p><span>Mbox：</span><br>
+                &nbsp; &nbsp; &nbsp; &nbsp; <a class="link" href="https://lz.qaiu.top/parser?url=https://wwnd.lanzouw.com/i0cjZ2hayu3c&pwd=gthq" target="_blank">Mbox</a>网络版v1.1.0
+                &nbsp; &nbsp; &nbsp; &nbsp; <a class="link" href="https://lz.qaiu.top/parser?url=https://wwnd.lanzouw.com/iJMIn2ngncli&pwd=c87s" target="_blank">Mbox</a>GitHub版v1.1.1<br>
+                &nbsp; &nbsp; &nbsp; &nbsp; <a class="link" href="https://github.com/XiaoRanLiu3119/TVBoxOS-Mobile/releases" target="_blank">Mbox</a>————GitHub地址
+            </p>
+            <p><span>下载器app（支持BT）：</span>
+                <a class="link" href="https://yxssp.lanzoui.com/b478866/" target="_blank">1dm+</a>（密码：cajd）————与Mbox配套的下载器
+            </p>
+	        <p><a class="link" href="https://dmla.lanzout.com/b05ocg2te" target="_blank">下载工具箱</a>
+                &nbsp; &nbsp; &nbsp; &nbsp; <span>一个更强大的工具箱：</span><a class="link" href="https://bgg.lanzout.com/b0w8121af" target="_blank">乱七八糟</a>
+            </p>
+	        <p><a class="link" href="https://club.yujianpay.com/index.php/archives/13/" target="_blank">雨见</a></p>
+	        <p><span>Kiwi Browser作者已经停止更新：</span><br>
+                &nbsp; &nbsp; &nbsp; &nbsp; <a class="link" href="https://kiwibrowser.com/" target="_blank">Kiwi Browser</a>————官网
+                &nbsp; &nbsp; &nbsp; &nbsp; <a class="link" href="https://github.com/kiwibrowser/src.next" target="_blank">Kiwi Browser</a>————GitHub源<br>
+                &nbsp; &nbsp; &nbsp; &nbsp; <a class="link" href="https://wwnd.lanzouw.com/i10sp2ng9sze" target="_blank">Kiwi Browser停更后最新版</a>————蓝奏云源 - 下载后需解压
+            </p>
+            <p><span>听书app：</span>
+                <a class="link" href="https://lanmeihkj.lanzouu.com/iTurM2hel1pg" target="_blank">声阅</a>
+            </p>
+        <h3>🚫 不买iPhone</h3>
+            <p><a class="link" href="https://github.com/opa334/TrollStore" target="_blank">巨魔</a> - GitHub网址</p>
+            <p><a class="link" href="https://testflight.apple.com/join/KBG9EsZW" target="_blank">TestFlight</a></p>
+            <h3 style="font-weight: bold; color: #0094F2; ">&nbsp; &nbsp; APP资源</h3>
+                <p>&nbsp; &nbsp; <a class="link" href="https://yinghezhinan.com/" target="_blank">硬核指南</a> - 够高清才是真硬核！</p>
+                <p>&nbsp; &nbsp; <a class="link" href="https://www.fenxm.com/" target="_blank">分享迷</a> - 优质精品TV软件、互联网资源分享</p>
+                <p>&nbsp; &nbsp; <a class="link" href="https://yomige.com/" target="_blank">优米格</a> - 分享有营养的</p>
+            <p style="font-weight: bold; color: red;">1.电池，冬天续航超不稳定，而且电池消耗速度快，华为用五年，iPhone最多也就两年就得换。</p>
+            <p>2.“设置”app的角标因系统更新无法隐藏。</p>
+            <p>3.不越狱情况下安装第三方app需签名，且签名有效期仅有一周。</p>
+            <p>4.Safari浏览器的插件管理功能不够强大，且若想打开HTML文件需下载其他app。</p>
+            <p>5.文件管理很别扭，用起来不方便。</p>
+    `;
+    
+    const content2_4 = `
+        <h3>📺 TV（可用“<a class="link" href="https://www.32r.com/app/125009.html" target="_blank">甲壳虫ADB</a>”调试及安装）</h3>
+            <p><a class="link" href="https://www.znds.com/" target="_blank">智能电视网_智能电视论坛_智能电视软件_安卓机顶盒论坛</a></p>
+	        <p><a class="link" href="https://xpgtv.com/" target="_blank">小苹果影视盒子</a></p>
+            <p><a class="link" href="http://dsxys.pro/" target="_blank">大师兄影视</a></p>
+	        <p><a class="link" href="https://dl.kkys03.com/" target="_blank">可可影视</a>（手机可用）</p>
+	        <p><a class="link" href="https://github.com/andandroidor/ourtv" target="_blank">OurTV1</a>
+	            &nbsp; &nbsp; &nbsp; &nbsp; <a class="link" href="https://github.com/lizongying/my-tv" target="_blank">OurTV2</a>
+	        </p>
+            <p style="font-weight: bold; color: #49D8A0;">***使用迅雷搜索<span style="font-weight: bold; color: red;">“分享小助手”</span>，里边有很多关于电视、盒子的app、固件、刷机教程等等。***</p>
+    `;
+
+    const content3 = `
+        <h2>📰 杂</h2>
+            <h3>&nbsp; &nbsp; &nbsp; &nbsp; 🎶 洛雪音乐源</h3>	            
+            <h3>&nbsp; &nbsp; &nbsp; &nbsp; 👨‍💻 Mbox视频源</h3>	            
+            <h3>&nbsp; &nbsp; &nbsp; &nbsp; 🔌 直播接口</h3>
+	        <h3>&nbsp; &nbsp; &nbsp; &nbsp; 👨‍🎤 抖音博主</h3>	            
+            <h3>&nbsp; &nbsp; &nbsp; &nbsp; 📶 主副路由设置</h3>                
+            <h3>&nbsp; &nbsp; &nbsp; &nbsp; 💡 GitHub网站打开的慢</h3>                
+            <h3>&nbsp; &nbsp; &nbsp; &nbsp; 🖥️ Windows 10取消密码登录</h3>
+            <h3>&nbsp; &nbsp; &nbsp; &nbsp; 🆙 Netlify使用说明</h3>
+    `;
+
+    const content3_1 = `
+        <h3>🎶 洛雪音乐源</h3>
+	        <p><a class="link" href="https://wwnd.lanzouw.com/iyuwu2j0p0re" target="_blank">下载网址</a>（蓝奏云）</p>
+            <p><a class="link" href="https://github.com/guoyue2010/lxmusic-/releases/tag/V241214" target="_blank">下载网址</a>（GitHub分享）</p>
+            <p>如果失效可以去桌面端<a class="link" href="https://github.com/lyswhut/lx-music-desktop/issues" target="_blank">GitHub issues</a>区找找</p>
+    `;
+
+    const content3_2 = `
+        <h3>👨‍💻 Mbox视频源(一些地址浏览器可以直接访问，打开后有资源)</h3>
+	        <p>http://www.饭太硬.com/tv</p>
+	        <p>http://肥猫.com</p>
+	        <p>https://xn--0lqf28wu83a2uw595b.v.nxog.top/api.php?id=1</p>
+	        <p>https://.v.nxog.top/apitv.php?id=1</p>
+	        <p>http://tv.nxog.top/m/</p>
+	        <p>https://盒子迷.top/春盈天下</p>
+	        <p>http://cdn.qiaoji8.com/tvbox.json</p>
+	        <p>http://tvbox.xn--4kq62z5rby2qupq9ub.top/</p>
+	        <p>http://ok321.top/tv</p>
+    `;
+    
+    const content3_3 = `
+        <h3>🔌 直播接口</h3>
+	        <p>https://盒子迷.top/ZB</p>
+	        <p>https://安卓哥.com/ZB</p>
+            <p><a class="link" href="https://gyssi.link/iptv.php" target="_blank">IPTV M3U 分享（电视直播源）</a></p>
+    `;
+    
+    const content3_4 = `
+        <h3>👨‍🎤 抖音博主</h3>
+	        <p><span style="font-weight: bold; color: red;">TechTeam</span>（TV、Android、IOS、Windows软件分享博主）</p>
+	        <p>&emsp;&emsp;&emsp;&emsp; <span>抖音号：</span>29651526766&emsp;&emsp;&emsp;&emsp; <span>微信公众号：</span>TechTeam
+                &emsp;&emsp;&emsp;&emsp; <a class="link" href="https://kqh2keeb3v0.feishu.cn/wiki/RQf9wj3rwiPP3gkfbr6c5CFynMe?bdx_monitor_append_params=%7B%22enter_from%22%3A%22im_safe_jump_to_web%22%7D&disable_auto_expose=1&enable_webview_select_search=1&finish_when_network_unavailable=false&font_scale=1.0&from_im=true&need_out_animation=right&source_btm_token=a1128.b17614.c770171.d88956.e6b36d64b-67ce-4d8c-a58b-f4500cbd902e" target="_blank">资源链接</a>
+            </p>
+    `;
+    
+    const content3_5 = `
+        <h3>📶 主副路由设置</h3>
+            <p>主路由LAN口对副路由LAN口桥接：</p>
+            <p>&emsp;&emsp; 1.关闭子路由的DHCP服务</p>
+            <p>&emsp;&emsp; 2.子路由内部网络（子路由的IP）可改可不改，建议改为和主路由同一网段的固定ip</p>
+            <p>注：若想登录无网络路由器的管理界面，首先要把电脑的IP获取方式改为静态且和无网络路由器的网段一样</p>
+    `;
+    
+    const content3_6 = `
+        <h3>💡 <a class="link" href="https://github.com/" target="_blank">GitHub</a>网站打开的慢</h3>
+            <p>解决办法1：</p>
+            <p>&emsp;&emsp; 1.打开开始窗口→Microsoft Store→搜索“Watt Toolkit”并安装</p>
+            <p>&emsp;&emsp; 2.以管理员身份运行Watt Toolkit→网络加速→勾选要加速的选项→一键加速</p>
+            <p style="font-weight: bold; color: #49D8A0;">
+                *********************
+                <span style="font-weight: bold; color: red;">慎用</span>
+                ，很可能和
+                <span style="font-weight: bold; color: red;">Proton VPN</span>
+                冲突。*********************
+            </p>
+            <p>解决办法2：</p>
+            <p>
+                &emsp;&emsp; <a class="link" href="https://www.123865.com/s/7r2iVv-9XHuA" target="_blank">Dev-sideca</a>————123网盘源
+                &nbsp; &nbsp; &nbsp; &nbsp; <a class="link" href="https://github.com/docmirror/dev-sidecar/releases" target="_blank">Dev-sideca</a>————GitHub源
+            </p>
+            <p>GitHub汉化：</p>
+            <p>&emsp;&emsp; 1.Tampermonkey安装“GitHub 中文化”插件，插件作者：maboloshi</p>            
+    `;
+    
+    const content3_7 = `
+        <h3>🖥️ Windows 10取消密码登录</h3>
+            <p>解决办法：</p>
+            <p>&emsp;&emsp; 1：转到“设置”>“帐户”>“登录选项”，然后确保“Microsoft 帐户需要 Windows Hello 登录”选项已关闭。（提示：如果您没有 Windows Hello 登录或使用本地帐户，请跳过此步骤。）</p>
+            <p>&emsp;&emsp; 2：在任务栏搜索框中键入netplwiz ，然后按 Enter 键打开高级用户帐户设置面板</p>
+            <p>&emsp;&emsp; 3：在“用户帐户”面板上，选择您的用户帐户名，取消选中“用户必须输入用户名和密码才能使用此计算机”旁边的复选框，然后单击“应用”。</p>
+            <p>&emsp;&emsp; 4：弹出“自动登录”对话框时，输入您的用户帐户密码，然后单击“确定”。</p>
+    `;
+
+    const content3_8 = `
+        <h3>🆙 <a class="link" href="https://www.netlify.com/" target="_blank">Netlify</a>使用说明</h3>
+            <h3 style="font-weight: bold; color: #0094F2;">添加站点：</h3>
+                <p>1.进入仪表板：点击“New site from Git”按钮旁边的“Drag and drop”选项，因为GitHub国内访问不稳定，不确定部署好的网站访问是否也不稳定，所以尽量选本地上传（<span style="font-weight: bold; color: red;">Drag and drop</span>）。</p>
+                <p>2.在本地创建个文件夹作为项目文件夹，将编辑好的静态网页放里边，项目文件夹名称随意，但静态html文件名必须是“<span style="font-weight: bold; color: red;">index.html</span>”。</p>
+                <p>2.将整个项目文件夹上传到Netlify，之后会自动部署好网站，部署好的网址在<span>Sites</span>👉站点👉<span>Site overview</span>里。</p>
+            <h3 style="font-weight: bold; color: #0094F2;">定义URL：</h3>
+                <p>因为添加完站点后系统会随机给个URL，比较复杂，所以定义个方便自己记的。</p>
+                <p>登录后首页点击左侧“<span>Sites</span>”</p>
+                <p>👉在右侧Sites区点击任意一个站点后默认是“Site overview”点击左侧“<span>Site configuration</span>”。</p>
+                <p>👉在右侧Site information区点击“<span>Change site name</span>”。</p>
+            <h3 style="font-weight: bold; color: #0094F2;">更新部署：</h3>
+                <p><span>Sites</span>👉站点👉<span>Deploys</span>👉点击右侧Deploys区底部<span>browse to upload</span>上传最新项目文件夹即可。</p>
+    `;
+
+    const content4 = `
+        <h2>📜 Emoji网站</h2>
+        <p><a class="link" href="https://emojipedia.org/" target="_blank">📙 Emojipedia — 😃 Home of Emoji Meanings 💁👌🎍😍</a></p>
+        <p><a class="link" href="https://symbl.cc/" target="_blank">SYMBL (◕‿◕) Symbols, Emojis, Characters, Scripts, Alphabets, Hieroglyphs and the entire Unicode</a></p>
+        <p><a class="link" href="https://getemoji.com/" target="_blank">GetEmoji - Copy & Paste All Emojis From The Emoji Keyboard - No apps required</a></p>
+        <p><a class="link" href="https://emojicopy.com/" target="_blank">EmojiCopy | Simple emoji copy and paste keyboard by JoyPixels®</a></p>
+        <p><a class="link" href="https://www.iconfinder.com/" target="_blank">8,425,000+ free and premium vector icons, illustrations and 3D illustrations</a></p>
+        <p><a class="link" href="https://www.flaticon.com/" target="_blank">Vector Icons and Stickers - PNG, SVG, EPS, PSD and CSS</a></p>
+    `;
+
+    const content4_1 = `
+        <h2>📙 Emojipedia</h2>
+        <p><a class="link" href="https://emojipedia.org/" target="_blank">📙 Emojipedia — 😃 Home of Emoji Meanings 💁👌🎍😍</a></p>
+    `;
+
+    const content4_2 = `
+        <h2>SYMBL</h2>
+        <p><a class="link" href="https://symbl.cc/" target="_blank">SYMBL (◕‿◕) Symbols, Emojis, Characters, Scripts, Alphabets, Hieroglyphs and the entire Unicode</a></p>
+    `;
+
+    // 更改内容展示
+    function changeContent(content, element) {
+        document.getElementById('content').innerHTML = content; // 更新内容区
+        resetActiveLinks(); // 重置活动链接状态
+        element.classList.add('active'); // 设置当前链接为活动状态
+    }
+
+    // 重置内容为默认展示
+    function resetContent() {
+        document.getElementById('content').innerHTML = `
+            <h1>一些学习的网站</h1>
+            <p>
+            <h3><a class="link" href="https://www.netlify.com/" target="_blank">Netlify</a> - 免费提供静态网站托管服务</h3>
+            <h3><a class="link-red" href="https://www.lzpanx.com/" target="_blank">懒盘搜索</a> - 提供夸克网盘|阿里云盘|迅雷网盘资源搜索服务</h3> 
+            <h3><a class="link" href="https://www.51zxw.net/" target="_blank">我要自学网</a> - 视频教程|免费教程|自学电脑|3D教程|平面教程|影视动画教程|办公教程|机械设计教程|网站设计教程-我要自学网</h3> 
+            <h3><a class="link" href="https://www.runoob.com/" target="_blank">HTML | 菜鸟教程</a></h3>
+            <h3><a class="link" href="https://www.freecodecamp.org/chinese/" target="_blank">freeCodeCamp</a> - 免费学习编程 - Python、JavaScript、Java、Git 等</h3>
+            <h3><a class="link" href="https://jsrun.net/" target="_blank">小闪电</a> - JSRUN可以在线编辑并运行代码的网站</h3>
+            <h3><a class="link" href="https://www.cnblogs.com/cinemaparadiso/p/9036722.html" target="_blank">博客园 - 南国之恋 - 学习网站</a></h3>
+            <h3><a class="link" href="https://yixi.tv/#/home" target="_blank">一席</a> - 演讲</h3>
+            <h3><a class="link" href="https://blog.csdn.net/weixin_36184718/article/details/142932978" target="_blank">构建专业CHM帮助文档的全攻略</a></h3>
+            </p>
+            <p class="my-mail">13716111921@163.com</p>
+        `;
+        resetActiveLinks(); // 重置链接活动状态
+    }
+
+    // 重置导航链接状态
+    function resetActiveLinks() {
+        const links = document.querySelectorAll('#sidebar a'); // 获取所有链接
+        links.forEach(link => link.classList.remove('active')); // 移除活动状态
+    }
+
+    // 切换子菜单的显示
+    function toggleSubmenu(submenuId, element) {
+        const submenus = document.querySelectorAll('.submenu');
+        submenus.forEach(submenu => {
+            if (submenu.id !== submenuId) {
+                submenu.style.display = 'none';
+            }
+        });
+        const submenu = document.getElementById(submenuId);
+        submenu.style.display = submenu.style.display === 'block' ? 'none' : 'block';
+        resetActiveLinks();
+        element.classList.add('active');
+    }
+</script>
+
+</body>
+</html>
